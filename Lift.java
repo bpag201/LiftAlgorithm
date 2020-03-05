@@ -4,7 +4,7 @@ import java.util.LinkedList;
 /**
  * The class of the lift object used to store the lift in the building.
  * @author Bethany Griffin
- * @version 1.3 - 25/2/20
+ * @version 1.5 - 05/03/2020
  */
 public class Lift
 {
@@ -59,7 +59,7 @@ public class Lift
     /**
      * Changes the lift's current floor depending on what direction it is moving in
     */
-    public void move(){
+    public void baselineMove(){
         if (checkIfChangeDirection()){
             goingUp ^= true;
         }
@@ -72,7 +72,7 @@ public class Lift
             findFloor();
         }
     }
-    public void firstMove(){
+    public void baselineFirstMove(){
         currentFloor++;
         findFloor();
     }
@@ -82,11 +82,9 @@ public class Lift
     public void addPerson(Person p){
         checkIfFull();
         if (!full){
-            System.out.println("Added!");
             peopleInLift.add(p);
             p.setInLift(true);
             checkCurrentNum();
-            // System.out.println("In: " + p.getInLift());
         }
     }
     /**
@@ -94,12 +92,8 @@ public class Lift
     */
     public void removePerson(Person p){
         if (p.getInLift()){
-            System.out.println("Removed!!");
-            int n = building.getNumPeople();
-            n--;
             peopleInLift.remove(p);
             checkCurrentNum();
-            //building.setNumPeople(n);
             building.removePeople(1);
         }
     }
@@ -121,22 +115,22 @@ public class Lift
         LinkedList<Person> peopleOnFloor = new LinkedList<Person>();
         peopleOnFloor = currFloor.getPeopleOnFloor();
 
-        //System.out.println("Available spaces: " + availableSpaces);
-        int spacesTaken = 0;
-        // System.out.println(spacesTaken <= availableSpaces);
-        // System.out.println(peopleOnFloor.size() != 0);
-        while (spacesTaken <= availableSpaces && peopleOnFloor.size() != 0){
-            // System.out.println("Number of people: " + peopleOnFloor.size());
-            // System.out.println("Current floor number: " + currFloor.getFloorNumber());
-            peopleOnFloor = currFloor.getPeopleOnFloor();
-            // System.out.println("People on floor: " + peopleOnFloor);
-            Person newPerson = peopleOnFloor.get(0);
-            addPerson(newPerson);
-            // System.out.println("In lift: " + newPerson.getInLift());
-            checkCurrentNum();
-            currFloor.removePerson(newPerson);
-            spacesTaken++;
+        LinkedList<Person> peopleToRemove = new LinkedList<Person>();
+        for (Person p: peopleOnFloor){
+            if (availableSpaces == 0){
+                break;
+            }
+            addPerson(p);
+            availableSpaces--;
+            peopleToRemove.add(p);
         }
+
+        if (peopleToRemove.size() != 0){
+            for (Person p: peopleToRemove){
+                currFloor.removePerson(p);
+            }
+        }
+
     }
     public void findFloor(){
         floor = building.getFloor(currentFloor);

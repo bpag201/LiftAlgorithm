@@ -5,7 +5,7 @@ import java.util.LinkedList;
  *
  *
  * @author Bethany Griffin
- * @version 1.1 - 14/2/20
+ * @version 1.3 - 29/02/2020
  */
 public class Building{
     private int totalFloors;
@@ -22,14 +22,11 @@ public class Building{
         Random r = new Random();
         for (int i = 0; i < totalFloors; i++){
             boolean directFloor = i == 0 || i == totalFloors - 1;
-            int peopleOnFloor = r.nextInt(5);
-            System.out.println("People on floor: " + peopleOnFloor);
+            int peopleOnFloor = r.nextInt(10);
             numPeople += peopleOnFloor;
-            System.out.println("Total people in building: " + numPeople);
-            Floor myFloor = new Floor(peopleOnFloor, i, directFloor);
+            Floor myFloor = new Floor(peopleOnFloor, i, directFloor, totalFloors);
 
             floors.add(myFloor);
-            System.out.println("");
         }
     }
 

@@ -3,20 +3,22 @@ import java.util.LinkedList;
 /**
  *
  *
- * @author (Bethany Griffin)
- * @version (1.1 - 14/2/20)
+ * @author Bethany Griffin
+ * @version 1.2 - 29/02/2020
  */
 public class Floor{
     private int numPeople;
     private int floorNum;
+    private int totalFloors;
     private LinkedList<Person> people;
     private boolean changeDirection;
     private boolean empty;
 
-    public Floor(int pNum, int id, boolean b){
+    public Floor(int pNum, int id, boolean b, int tFloors){
         numPeople = pNum;
         floorNum = id;
         changeDirection = b;
+        totalFloors = tFloors;
 
         if (numPeople == 0){
             empty = true;
@@ -28,12 +30,9 @@ public class Floor{
 
         Random r = new Random();
         for (int i = 0; i < numPeople; i++){
-            int destination = (int)(1 + (6 - 1) * r.nextFloat());
-            // System.out.println("Destination: " + destination);
+            int destination = (int)(1 + (totalFloors - 1) * r.nextFloat());
             Person myPerson = new Person(floorNum, destination);
-            // System.out.println("New person: " + myPerson);
             people.add(myPerson);
-            // System.out.println("All people: " + people);
         }
     }
 

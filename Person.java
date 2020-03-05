@@ -12,7 +12,6 @@ public class Person
     private int currentFloor;
     private int destFloor;
     private boolean inLift;
-    private boolean leaveBuilding;
 
 //Methods
     //Constructors
@@ -22,7 +21,6 @@ public class Person
         currentFloor = cFloor;
         destFloor = dFloor;
         inLift = false;
-        leaveBuilding = false;
     }
     //Setters
     public void setCurrentFloor(int newFloor){
@@ -40,11 +38,5 @@ public class Person
     }
     public boolean getInLift(){
         return inLift;
-    }
-    public boolean canLeaveBuilding(){
-        return leaveBuilding;
-    }
-    public void setLeaveBuilding(boolean b){
-        leaveBuilding = b;
     }
 }
